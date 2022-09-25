@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const checkIfUserExistsWithEmail = require("../modules/checkIfUserExistsWithEmail");
+const checkIfUserExist = require("../modules/checkIfUserExists");
 const passwordEncryptor = require("../modules/passwordEncryptor");
 const tokenGenerator = require("../modules/tokenGenerator");
 
@@ -7,7 +7,7 @@ const userController = {
   create: async (req, res, next) => {
     console.log('create');
     try {
-      const foundUser = await checkIfUserExistsWithEmail(req.body.email);
+      const foundUser = await checkIfUserExist.withEmail(req.body.email);
       const encryptedPassword = await passwordEncryptor.encryptor(req.body.password);
       if (foundUser) {
         res.send("This email is already registered");
@@ -27,8 +27,18 @@ const userController = {
   read: async (req, res, next) => {
     console.log('read');
     try {
-      const userList = await User.findAll();
-      res.json(userList);
+      const foundUser = await User.findByPk(res.locals.userId);
+
+      res.json(
+        {
+          user: {
+            id: foundUser.id,
+            email: foundUser.email,
+            created_at: foundUser.created_at,
+            updated_at: foundUser.updated_at,
+          },
+        }
+      );
     } catch (error) {
       res.send(error.errors[0].message);
     }
@@ -37,7 +47,7 @@ const userController = {
   update: async (req, res, next) => {
     console.log('update');
     try {
-      const foundUser = await checkIfUserExistsWithEmail(req.body.email);
+      const foundUser = await checkIfUserExist.withEmail(req.body.email);
       const encryptedPassword = await passwordEncryptor.encryptor(req.body.password);
       if (foundUser) {
         res.send("This email is already registered");

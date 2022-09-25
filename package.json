@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node index.js",
-    "dev": "node-dev index.js --no-notify --clear"
+    "dev": "node-dev index.js --no-notify --clear",
+    "createdb": "psql -U timer -d timer -f ./data/create_db.sql"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

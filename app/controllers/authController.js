@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const checkIfUserExistsWithEmail = require("../modules/checkIfUserExistsWithEmail");
+const checkIfUserExist = require("../modules/checkIfUserExists");
 const passwordEncryptor = require("../modules/passwordEncryptor");
 const tokenGenerator = require("../modules/tokenGenerator");
 
@@ -7,7 +7,7 @@ const authController = {
   login: async (req, res, next) => {
     console.log('login');
     try {
-      const foundUser = await checkIfUserExistsWithEmail(req.body.email);
+      const foundUser = await checkIfUserExist.withEmail(req.body.email);
       if (foundUser) {
         const passwordValidation = await passwordEncryptor.compare(req.body.password, foundUser.password);
         if (passwordValidation) {
@@ -40,14 +40,9 @@ const authController = {
   },
 
   check: async (req, res, next) => {
-    console.log('check');
+    console.log('authController.check');
     try {
-      const response = tokenGenerator.verify(req.body.token);
-      const foundUser = await User.findOne({
-        where: {
-          id: response.userId,
-        }
-      });
+      const foundUser = await checkIfUserExist.withId(res.locals.userId);
       res.json(
         {
           user: {
