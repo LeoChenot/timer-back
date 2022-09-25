@@ -1,6 +1,6 @@
 const User = require("./User");
 const List = require("./List");
-const Timer = require("./timer");
+const Timer = require("./Timer");
 
 User.hasMany(List, {
   as: 'lists',
