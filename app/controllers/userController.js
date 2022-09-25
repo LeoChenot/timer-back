@@ -20,7 +20,8 @@ const userController = {
         res.send("The account has been created");
       }
     } catch (error) {
-      res.send(error.errors[0].message);
+      res.send(error);
+      // res.send(error.errors[0].message);
     }
   },
 
@@ -40,7 +41,7 @@ const userController = {
         }
       );
     } catch (error) {
-      res.send(error.errors[0].message);
+      res.send(error);
     }
   },
 
@@ -89,7 +90,7 @@ const userController = {
         console.log(userRemoved);
       }
     } catch (error) {
-      res.send(error.errors[0].message);
+      res.send(error);
     }
   },
 };

@@ -11,7 +11,7 @@ const listController = {
       });
       res.send(newList);
     } catch (error) {
-      console.log(error);
+      res.send(error);
     }
   },
 
@@ -28,7 +28,7 @@ const listController = {
       });
       res.send(listList);
     } catch (error) {
-      console.log(error);
+      res.send(error);
     }
   },
 

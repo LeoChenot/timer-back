@@ -14,7 +14,6 @@ const timerController = {
       res.json(newTimer);
     } catch (error) {
       res.send(error);
-      console.log(error);
     }
   },
 
@@ -31,7 +30,7 @@ const timerController = {
       }
       next();
     } catch (error) {
-      next(error);
+      res.send(error);
     }
   },
 
@@ -57,9 +56,8 @@ const timerController = {
         console.log(timerRemoved);
       }
     } catch (error) {
-      next(error)
+      res.send(error);
     }
-    console.log(id);
   },
 };
 

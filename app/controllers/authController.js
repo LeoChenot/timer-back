@@ -55,7 +55,7 @@ const authController = {
         }
       );
     } catch (error) {
-      console.log(error);
+      res.send(error);
     }
   },
 
