@@ -2,7 +2,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node-dev index.js --no-notify --clear",
-    "createdb": "psql -U timer -d timer -f ./data/create_db.sql"
+    "createdb": "psql -U timer -d timer -f ./data/create_db.sql",
+    "createdbH": "heroku pg:psql postgresql-dimensional-89371 --app timers-app-leo-chenot -f ./data/create_db.sql"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
