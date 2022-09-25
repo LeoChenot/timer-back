@@ -1,4 +1,4 @@
-const Timer = require("../models/timer");
+const Timer = require("../models/Timer");
 
 const timerController = {
   async create(req, res) {
