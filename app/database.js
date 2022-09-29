@@ -5,9 +5,11 @@ const client = new Sequelize(process.env.DATABASE_URL, {
     updatedAt: 'updated_at',
     createdAt: 'created_at',
   },
-  ssl: {
-    require: true,
-    rejectUnauthorized: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    }
   }
 });
 
