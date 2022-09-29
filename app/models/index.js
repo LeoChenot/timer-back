@@ -14,18 +14,6 @@ List.belongsTo(User, {
 
 // ---------------------
 
-User.hasMany(Timer, {
-  as: 'timers',
-  foreignKey: 'user_id',
-});
-
-Timer.belongsTo(User, {
-  as: 'user',
-  foreignKey: 'user_id',
-});
-
-// ---------------------
-
 List.hasMany(Timer, {
   as: 'timers',
   foreignKey: 'list_id',

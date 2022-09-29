@@ -6,22 +6,42 @@ const tokenGenerator = require("../modules/tokenGenerator");
 const userController = {
   create: async (req, res, next) => {
     console.log('create');
-    try {
-      const foundUser = await checkIfUserExist.withEmail(req.body.email);
-      const encryptedPassword = await passwordEncryptor.encryptor(req.body.password);
-      if (foundUser) {
-        res.send("This email is already registered");
+    const { email, password } = req.body;
+    console.log({email});
+    console.log({password});
+    if (email) {
+      if (password) {
+        const foundUser = await checkIfUserExist.withEmail(email);
+        if (foundUser) {
+          res.status(403).send({
+            message: "This email is already registered",
+          });
+        }
+        else {
+          const encryptedPassword = await passwordEncryptor.encryptor(password);
+          try {
+            await User.create({
+              email: email,
+              password: encryptedPassword,
+            });
+            res.send({
+              message: "The account has been created",
+            });
+          } catch (error) {
+            res.send(error);
+          }
+        }
       }
       else {
-        await User.create({
-          email: req.body.email,
-          password: encryptedPassword,
+        res.status(403).send({
+          message: "Password must be not empty",
         });
-        res.send("The account has been created");
       }
-    } catch (error) {
-      res.send(error);
-      // res.send(error.errors[0].message);
+    }
+    else {
+      res.status(403).send({
+        message: "Email must be not empty",
+      });
     }
   },
 

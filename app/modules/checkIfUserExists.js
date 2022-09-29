@@ -3,7 +3,7 @@ const { User } = require("../models");
 const checkIfUserExist = {
   withEmail: async (email) => {
     return await User.findOne({
-      where: {
+      where: { 
         email: email,
       }
     });

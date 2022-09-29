@@ -13,22 +13,21 @@ router.get('/', homeController.homePage);
 
 
 // CRUD User
-router.post('/api/user', userController.create);
-router.get('/api/user', auth, userController.read);
-router.patch('/api/user', auth, userController.update);
-router.delete('/api/user', auth, userController.delete);
+router.post('/api/users', userController.create);
+router.get('/api/users', auth, userController.read);
+router.patch('/api/users', auth, userController.update);
+router.delete('/api/users', auth, userController.delete);
 
 // CRUD LIST
-router.post('/api/list', auth, listController.create);
-router.get('/api/list', auth, listController.read);
-router.patch('/api/list/:id', auth, listController.update);
-router.delete('/api/list/:id', auth, listController.delete);
+router.post('/api/lists', auth, listController.create);
+router.get('/api/lists', auth, listController.readAll);
+router.patch('/api/lists/:listId', auth, listController.update);
+router.delete('/api/lists/:listId', auth, listController.delete);
 
 // CRUD Timer
-router.post('/api/timer', auth, timerController.create);
-router.get('/api/timer', auth, timerController.read);
-router.patch('/api/timer/:id', auth, timerController.update);
-router.delete('/api/timer/:id', auth, timerController.delete);
+router.post('/api/lists/:listId/timers', auth, timerController.create);
+router.patch('/api/lists/:listId/timers/:timerId', auth, timerController.update);
+router.delete('/api/lists/:listId/timers/:timerId', auth, timerController.delete);
 
 // Auth
 router.post('/api/login', authController.login);

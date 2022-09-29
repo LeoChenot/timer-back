@@ -15,16 +15,21 @@ const listController = {
     }
   },
 
-  async read(req, res, next) {
+  async readAll(req, res, next) {
     console.log('read');
     try {
       const listList = await List.findAll({
         where: {
           user_id: res.locals.userId,
         },
-        include: {
+        include: [{
           model: Timer,
-        }
+          as: "timers",
+        }],
+        order: [
+          ['id', 'ASC'],
+          ['timers', 'id', 'ASC']
+        ],
       });
       res.send(listList);
     } catch (error) {
@@ -38,6 +43,19 @@ const listController = {
 
   async delete(req, res, next) {
     console.log('delete');
+    try {
+      const listId = Number(req.params.listId);
+      const listDeleted = await List.destroy({
+        where: {
+          id: listId,
+        }
+      });
+      res.send({
+        message: "The list has been deleted",
+      });
+    } catch (error) {
+      res.send(error);
+    }
   },
 };
 

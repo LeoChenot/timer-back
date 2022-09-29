@@ -8,7 +8,6 @@ const timerController = {
       const newTimer = await Timer.create({
         name: name,
         delay: delay,
-        user_id: res.locals.userId,
         list_id: listId,
       });
       res.json(newTimer);
@@ -23,7 +22,10 @@ const timerController = {
       const timerList = await Timer.findAll({
         where: {
           user_id: res.locals.userId,
-        }
+        },
+        order: [
+          ['id', 'ASC'],
+        ]
       });
       if (timerList) {
         return res.json(timerList);
@@ -35,15 +37,33 @@ const timerController = {
   },
 
   async update(req, res) {
-    res.send('update');
+    console.log('update');
+    const { name, delay, listId } = req.body;
+    const timerId = Number(req.params.timerId);
+    try {
+      const timerUpdated = await Timer.update({
+        name: name,
+        delay: delay,
+        list_id: listId,
+      },{
+        where: {
+          id: timerId,
+        }
+      });
+      res.send({
+        message: "The timer has been updated",
+      });
+    } catch (error) {
+      res.send(error);
+    }
   },
 
   async delete(req, res, next) {
-    const id = Number(req.params.id);
+    const timerId = Number(req.params.timerId);
     try {
       const timerRemoved = await Timer.destroy({
         where: {
-          id: id,
+          id: timerId,
         }
       });
       if (timerRemoved === 0) {
