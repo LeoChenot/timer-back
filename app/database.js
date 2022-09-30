@@ -6,11 +6,13 @@ const client = new Sequelize(process.env.DATABASE_URL, {
     createdAt: 'created_at',
   },
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    }
-  }
+    ...((!process.env.LOCALHOST || process.env.LOCALHOST === "false") && {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      }
+    }),
+  },
 });
 
 const connect = async () => {

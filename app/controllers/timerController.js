@@ -10,7 +10,9 @@ const timerController = {
         delay: delay,
         list_id: listId,
       });
-      res.json(newTimer);
+      res.send({
+        message: "This timer has been created",
+      });
     } catch (error) {
       res.send(error);
     }
@@ -51,7 +53,7 @@ const timerController = {
         }
       });
       res.send({
-        message: "The timer has been updated",
+        message: "This timer has been updated",
       });
     } catch (error) {
       res.send(error);
@@ -67,10 +69,14 @@ const timerController = {
         }
       });
       if (timerRemoved === 0) {
-        res.send("This timer doesn't exist");
+        res.send({
+          message: "This timer doesn't exist",
+        });
       }
       else if (timerRemoved === 1) {
-        res.send('This timer has been deleted ');
+        res.send({
+          message: "This timer has been deleted",
+        });
       }
       else {
         console.log(timerRemoved);

@@ -9,7 +9,9 @@ const listController = {
         name: name,
         user_id: res.locals.userId,
       });
-      res.send(newList);
+      res.send({
+        message: "This list has been created",
+      });
     } catch (error) {
       res.send(error);
     }
@@ -51,7 +53,7 @@ const listController = {
         }
       });
       res.send({
-        message: "The list has been deleted",
+        message: "This list has been deleted",
       });
     } catch (error) {
       res.send(error);
