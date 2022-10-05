@@ -13,7 +13,7 @@ const userController = {
       if (password) {
         const foundUser = await checkIfUserExist.withEmail(email);
         if (foundUser) {
-          res.status(403).send({
+          res.status(409).send({
             message: "This email is already registered",
           });
         }
