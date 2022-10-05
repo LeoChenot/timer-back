@@ -61,7 +61,9 @@ const userController = {
         }
       );
     } catch (error) {
-      res.send(error);
+      res.status(403).send({
+        message: "This account doesn't exist",
+      });
     }
   },
 
